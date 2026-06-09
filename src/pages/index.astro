@@ -1,28 +1,108 @@
 ---
-import Layout from "@/layouts/main.astro";
-import { Button } from "@/components/ui/button";
-import { Image } from "astro:assets";
-import HeroDark from "../assets/hero-dark.svg";
-import HeroLight from "../assets/hero-light.svg";
+import Layout from "@/layouts/main.astro"
+import { Button } from "@/components/ui/button"
+import { Image } from "astro:assets"
+import HeroDark from "../assets/hero-dark.svg"
+import HeroLight from "../assets/hero-light.svg"
+import { ArrowUpRight } from "lucide-react"
+import GitHub from "../assets/icons/Github.svg"
+import TwinImg from "../assets/projectimages/Twin3D.png"
+import KazePCB from "../assets/projectimages/KazePCB.png"
 ---
 
 <Layout>
-  <!-- Changed justify-center to justify-start and added top padding (pt-24) -->
-  <div class="flex flex-col min-h-svh p-6 pt-64 items-center justify-start text-center gap-6">
-    <Image src={HeroDark} alt="Hero illustration" class="w-full max-w-4xl hidden dark:block" />
-    <Image src={HeroLight} alt="Hero illustration" class="w-full max-w-4xl dark:hidden" />
-    
+  <div
+    class="flex flex-col w-full p-6 pt-64 pb-64 items-center justify-start text-center gap-6"
+  >
+    <Image
+      src={HeroDark}
+      alt="Hero illustration"
+      aria-label={"Vejas S"}
+      class="w-full max-w-4xl hidden dark:block"
+    />
+    <Image
+      src={HeroLight}
+      alt="Hero illustration"
+      aria-label={"Vejas S"}
+      class="w-full max-w-4xl dark:hidden"
+    />
     <h2 class="text-3xl font-serif max-w-xl balance">
-      is a teen dev based in Luxembourg, who loves to tinker with hardware and create polished websites.
+      is a teen dev based in Luxembourg, who loves to tinker with hardware and
+      create polished websites.
     </h2>
   </div>
-  <!-- Section with a couple projects and a couple brlog posts -->
-  <div class="flex-col columns-2">
-    <div>
-      <h3 class="text-7xl font-serif">Projects</h3>
+
+  <div class="grid grid-cols-2 w-full border-t border-border/40 items-start">
+    <div class="flex items-center flex-col justify-center p-12">
+      <h1 class="text-7xl font-serif pb-12">Projects</h3>
+      <div class="pb-6">
+        <!-- I will harcode projects for now, since I dont have that many but will have to think for solutions for the actual proj page. -->
+        <div class="flex items-start gap-4 pb-6">
+          <Image
+            src={TwinImg}
+            alt="Image of Twin PCB"
+            class="w-2/5 h-auto rounded-2xl object-cover shrink-0"
+          />
+          <div class="flex flex-col gap-2">
+            <h2 class="text-3xl font-serif">Twin</h1>
+            <p class="text-sm">
+              Ut nisi aute ipsum anim sit et nulla duis aute Lorem ad minim ad.
+              Sint fugiat tempor duis. Officia consequat deserunt deserunt elit
+              ex sunt. Quis qui eiusmod laboris cillum. Eu duis id ea magna
+              consectetur.
+            </p>
+            <div class="flex gap-2">
+              <a href="/projects/twin"
+                ><Button variant={"default"} size={"sm"}
+                  ><ArrowUpRight />Read more</Button
+                ></a
+              >
+              <a href="https://github.com/las-vejas/twin" target="_blank"
+                ><Button variant={"outline"} size={"sm"}
+                  ><GitHub /> Repository</Button
+                ></a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-row-reverse items-start gap-4 pb-6">
+          <Image
+            src={KazePCB}
+            alt="Image of Twin PCB"
+            class="w-2/5 h-auto rounded-lg object-cover shrink-0"
+          />
+          <div class="flex flex-col gap-2">
+            <h2 class="text-3xl font-serif">Kaze</h1>
+            <p class="text-sm">
+              Ut nisi aute ipsum anim sit et nulla duis aute Lorem ad minim ad.
+              Sint fugiat tempor duis. Officia consequat deserunt deserunt elit
+              ex sunt. Quis qui eiusmod laboris cillum. Eu duis id ea magna
+              consectetur.
+            </p>
+            <div class="flex gap-2">
+              <a href="/projects/kaze"
+                ><Button variant={"default"} size={"sm"}
+                  ><ArrowUpRight />Read more</Button
+                ></a
+              >
+              <a href="https://github.com/las-vejas/kaze" target="_blank"
+                ><Button variant={"outline"} size={"sm"}
+                  ><GitHub /> Repository</Button
+                ></a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="/projects"
+        ><Button variant={"outline"} size={"lg"}
+          ><ArrowUpRight />Projects Page</Button
+        ></a
+      >
     </div>
-    <div>
-      <h3 class="text-7xl font-serif">Blog</h3>
+    <div class="flex items-center flex-col justify-center p-12">
+      <h1 class="text-7xl font-serif pb-12">Blog</h3>
+      <div> <p class="text-xs text-muted-foreground text-center pt-2">Posts coming soon!</p> <!-- blog posts go here, maybe the 2 top newest ones? --></div>
     </div>
   </div>
 </Layout>
