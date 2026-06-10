@@ -1,10 +1,231 @@
 ---
 import Layout from "@/layouts/main.astro"
 import { Button } from "@/components/ui/button"
+import { Image } from "astro:assets"
+import { ArrowUpRight } from "lucide-react"
+import GitHub from "../assets/icons/Github.svg"
+import { getCollection, render } from "astro:content"
+import { Badge } from "@/components/ui/badge"
+import Blueprint from "../assets/icons/bp.svg"
+
+
+const projects = await getCollection("projects")
+const rendered = await Promise.all(
+  projects.map(async (p: any) => ({ ...p, content: await render(p) }))
+)
 ---
 
 <Layout>
-  <div>
-    <h1 class="text-4xl">Projects</h1>
+  <!-- Header -->
+  <div
+    class="flex flex-col items-center justify-center text-center pt-32 pb-20 px-6"
+  >
+    <h1 class="text-8xl font-serif mb-4">Projects</h1>
+    <p class="text-muted-foreground text-sm">Some of my best work.</p>
+  </div>
+
+  <!-- Grid -->
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 gap-4 p-6 border-t border-border/40 w-full rounded-2xl"
+  >
+    {
+      rendered.map(({ slug, data, content: { Content } }, i) => (
+        <div
+          class="project-card group relative flex flex-col p-8 border-b border-r border-border/40 cursor-pointer hover:bg-accent/20 transition-colors duration-200 rounded-2xl"
+          data-title={data.title}
+          data-category={data.category ?? ""}
+          data-github={data.github ?? ""}
+          data-imgsrc={data.image?.src ?? ""}
+          data-tags={data.tags?.join(",") ?? ""}
+        >
+          <div class="flex items-start gap-6">
+            {data.image && (
+              <Image
+                src={data.image}
+                alt={data.title}
+                class="w-2/5 rounded-xl object-cover shrink-0 aspect-video"
+              />
+            )}
+            <div class="flex flex-col gap-3 flex-1">
+              <h2 class="text-4xl font-serif leading-tight">{data.title}</h2>
+              <div class="flex flex-wrap gap-2">
+                {data.tags?.map((tag: string) => (
+                  <Badge variant="secondary">{tag}</Badge>
+                ))}
+              </div>
+              <p class="text-sm text-muted-foreground leading-relaxed">
+                {data.description}
+              </p>
+              <div class="flex gap-2 mt-2">
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="pointer-events-none"
+                >
+                  <ArrowUpRight /> Read more
+                </Button>
+                {data.github && (
+                  <a
+                    href={data.github}
+                    target="_blank"
+                    onclick="event.stopPropagation()"
+                  >
+                    <Button variant="outline" size="sm">
+                      <GitHub /> Repository
+                    </Button>
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div class="hidden" data-content>
+            <div class="prose prose-invert prose-sm max-w-none">
+              <Content />
+            </div>
+          </div>
+          <div class="hidden" data-modal-actions>
+            {data.github && (
+              <a href={data.github} target="_blank">
+                <Button variant="outline" size="sm">
+                  <GitHub /> Repository
+                </Button>
+              </a>
+            )}
+            {data.links?.map(
+  (link: { label: string; url: string; icon?: string; color?: string; variant?: "default" | "outline" | "secondary" | "ghost" | "destructive" | "link" | "blueprint" }) => (
+    <a href={link.url} target="_blank">
+      <Button variant={link.variant ?? "outline"} size="sm">
+        {link.icon === "globe" && <GitHub />}
+        {link.icon === "link" && <ArrowUpRight />}
+        {link.icon === "youtube" && <GitHub />}
+        {link.icon === "download" && <GitHub />}
+        {link.icon === "bp" && <Blueprint />}
+        {link.label}
+      </Button>
+    </a>
+  )
+)}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <!-- Modal -->
+  <div
+    id="project-modal"
+    class="fixed inset-0 z-50 hidden items-start justify-center pt-16 px-4 pb-8"
+  >
+    <!-- Backdrop -->
+    <div
+      id="modal-backdrop"
+      class="absolute inset-0 bg-background/80 backdrop-blur-sm"
+    >
+    </div>
+
+    <!-- Panel -->
+    <div
+      class="relative z-10 w-full max-w-2xl bg-card border border-border rounded-2xl overflow-hidden flex flex-col max-h-[80vh]"
+    >
+      <button
+        id="modal-close"
+        class="absolute top-4 left-4 p-2 rounded-md hover:bg-accent transition-colors"
+        aria-label="Close"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M18 6 6 18M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <!-- Modal header -->
+      <div
+        class="flex items-start justify-between pt-16 px-8 pb-8 border-b border-border/40 shrink-0"
+      >
+        <div class="flex flex-col gap-2">
+          <h2 id="modal-title" class="text-5xl font-serif"></h2>
+          <div id="modal-tags"></div>
+          <div id="modal-github"></div>
+        </div>
+        <div id="modal-image" class="w-1/3 shrink-0 ml-6"></div>
+      </div>
+
+      <!-- Modal body -->
+      <div
+        id="modal-body"
+        class="overflow-y-auto p-8 text-sm leading-relaxed text-muted-foreground"
+      >
+      </div>
+    </div>
   </div>
 </Layout>
+
+<script>
+  const cards = document.querySelectorAll<HTMLElement>(".project-card")
+  const modal = document.getElementById("project-modal")!
+  const backdrop = document.getElementById("modal-backdrop")!
+  const modalTitle = document.getElementById("modal-title")!
+  const modalBody = document.getElementById("modal-body")!
+  const modalImage = document.getElementById("modal-image")!
+  const modalGithub = document.getElementById("modal-github")!
+  const modalTags = document.getElementById("modal-tags")!
+  const closeBtn = document.getElementById("modal-close")!
+
+  const openModal = (card: HTMLElement) => {
+    const title = card.dataset.title ?? ""
+    const github = card.dataset.github ?? ""
+    const imgSrc = card.dataset.imgsrc ?? ""
+    const tags = card.dataset.tags ? card.dataset.tags.split(",") : []
+    const content = card.querySelector("[data-content]") as HTMLElement
+
+    modalTitle.textContent = title
+    modalBody.innerHTML = content.innerHTML
+
+    modalImage.innerHTML = imgSrc
+      ? `<img src="${imgSrc}" alt="${title}" class="rounded-xl object-cover w-full aspect-video" />`
+      : ""
+
+    const actions = card.querySelector("[data-modal-actions]") as HTMLElement
+    modalGithub.innerHTML = actions.innerHTML
+
+    modalTags.innerHTML = tags.length
+      ? `<div class="flex flex-wrap gap-2">${tags
+          .map(
+            (t) =>
+              `<span class="text-xs font-sans border border-border rounded-md px-2 py-1 text-muted-foreground">${t}</span>`
+          )
+          .join("")}</div>`
+      : ""
+
+    modal.classList.remove("hidden")
+    modal.classList.add("flex")
+    document.body.style.overflow = "hidden"
+  }
+
+  const closeModal = () => {
+    modal.classList.add("hidden")
+    modal.classList.remove("flex")
+    document.body.style.overflow = ""
+  }
+
+  cards.forEach((card) => {
+    card.addEventListener("click", () => openModal(card))
+  })
+
+  closeBtn.addEventListener("click", closeModal)
+  backdrop.addEventListener("click", closeModal)
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal()
+  })
+</script>
