@@ -5,48 +5,109 @@ import { Send } from "lucide-react"
 ---
 
 <Layout>
-  <div
-    class="flex flex-col items-center justify-center text-center pt-32 pb-20 px-6"
-  >
+  <div class="flex flex-col items-center justify-center text-center pt-32 pb-20 px-6">
     <h1 class="text-8xl font-serif mb-4">Contact</h1>
     <p class="text-muted-foreground text-sm">Reach out to me!</p>
-    <div class="w-full px-6 pb-24">
+    <div class="w-full px-6 pb-24 mt-12">
   <div class="grid grid-cols-1 md:grid-cols-2 w-full min-h-75">
-
-    <!-- Left half -->
-    <div class="p-10 border border-border/40">
-      <h2 class="text-3xl font-serif mb-4">Left side</h2>
-      <p class="text-sm text-muted-foreground">
-        Content for the left half of the screen.
+    <div class="p-0 md:p-6">
+      <h2 class="text-4xl font-serif font-medium tracking-tight mb-2">Contact Me</h2>
+      <p class="text-sm text-muted-foreground mb-8">
+        Send me a message using the form below!
       </p>
-      <form id="messageForm" class="space-y-3 mt-4">
-        <label class="block">
-            <span class="block mb-1">Name:</span>
-            <input type="text" name="name" placeholder="Enter your name" required class="block w-full rounded-md border border-gray-500 bg-gray-300/25 px-2 py-2 text-base outline sm:text-sm"/>
-        </label>
-        <label class="block">
-            <span class="block mb-1">Your email:</span>
-            <input type="email" name="email" placeholder="vejas@vejas.zip" required class="block w-full rounded-md border border-gray-500 bg-gray-300/25 px-2 py-2 text-base outline sm:text-sm"/>
-        </label>
-        <label class="block">
-            <span class="block mb-1">Your message:</span>
-            <textarea name="message" placeholder="Your message goes here..." rows="6" required />
-        </label>
+      
+      <form id="contactForm" class="space-y-5">
+        <div class="space-y-1.5">
+          <label for="name" class="text-sm font-medium tracking-wide">Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your name" required 
+            class="flex h-10 w-full rounded-md border border-border/60 bg-muted/30 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"/>
+        </div>
 
-        <Button type="submit" variant={"outline"}><Send/>Send</Button>
+        <div class="space-y-1.5">
+          <label for="email" class="text-sm font-medium tracking-wide">Your email</label>
+          <input type="email" id="email" name="email" placeholder="vejas@vejas.zip" required 
+            class="flex h-10 w-full rounded-md border border-border/60 bg-muted/30 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"/>
+        </div>
+
+        <div class="space-y-1.5">
+          <label for="message" class="text-sm font-medium tracking-wide">Your message</label>
+          <textarea id="message" name="message" placeholder="Your message goes here..." rows="5" required  
+            class="flex min-h-30 w-full rounded-md border border-border/60 bg-muted/30 px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none"/>
+        </div>
+
+        <Button type="submit" variant="outline" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 mt-2">
+          <Send className="w-4 h-4"/>
+          <span>Send Message</span>
+        </Button>
       </form>
     </div>
 
-    <!-- Right half -->
-    <div class="p-10 border border-border/40">
-      <h2 class="text-3xl font-serif mb-4">Right side</h2>
-      <p class="text-sm text-muted-foreground">
-        Content for the right half of the screen.
-      </p>
-    </div>
+    <div class="p-10 border-t border-b border-border/40">
+  <h2 class="text-3xl font-serif mb-4">Where you may find me!</h2>
+
+  <p class="text-sm text-muted-foreground leading-relaxed mb-4">
+    I'm usually working on projects, experimenting with hardware, or building websites. You might also find me coding, refining UI details, or exploring new tech ideas.
+  </p>
+
+  <div class="flex flex-col gap-2 text-sm">
+    <a
+      href="https://github.com/las-vejas"
+      target="_blank"
+      class="hover:underline text-foreground"
+    >
+      GitHub
+    </a>
+
+    <a
+      href="mailto:vejas@vejas.zip"
+      class="hover:underline text-foreground"
+    >
+      Email
+    </a>
+
+    <a
+      href="https://discord.com"
+      target="_blank"
+      class="hover:underline text-foreground"
+    >
+      Discord
+    </a>
+    <a
+      href="https://hackclub.enterprise.slack.com/team/U0930DMR4BA"
+      target="_blank"
+      class="hover:underline text-foreground"
+    >
+      Hack Club Slack
+    </a>
+  </div>
+</div>
 
   </div>
 </div>
     </div>
   </div>
 </Layout>
+
+<script lang="ts">
+    const form = document.getElementById("contactForm");
+    const message = document.getElementById("formMessage");
+
+    if (!form || !(form instanceof HTMLFormElement)) throw new Error("Form not found");
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(form).entries());
+        const res = await fetch("api/sendemail", {
+            method: "POST",
+            headers: { "Content-Type": "applications/json" },
+            body: JSON.stringify(data)
+        });
+        if (res.ok) {
+            message?.classList.remove("hidden");
+            form.reset();
+        } else {
+            alert("Error sending message.");
+            console.error(await res.text());
+        }
+    });
+</script>
