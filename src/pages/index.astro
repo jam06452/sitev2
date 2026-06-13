@@ -3,7 +3,14 @@ import Layout from "@/layouts/main.astro"
 import { Button } from "@/components/ui/button"
 import { ArrowUpRight } from "lucide-react"
 import { userData } from "@/lib/user-data"
+import { getCollection, render } from "astro:content"
+const projects = await getCollection("projects")
+const rendered = await Promise.all(
+  projects.map(async (p: any) => ({ ...p, content: await render(p) }))
+)
+const featured = rendered.filter((p: any) => p.data.featured).slice(0, 2)
 ---
+
 
 <Layout>
   <!-- HERO -->
@@ -36,73 +43,42 @@ import { userData } from "@/lib/user-data"
       <h1 class="text-7xl font-serif pb-12">Projects</h1>
 
       <div class="pb-6">
+        {
+          featured.map((p: any, i: number) => (
+            <div class={i % 2 === 1 ? "flex flex-row-reverse items-start gap-4 pb-10" : "flex items-start gap-4 pb-10"}>
+              {
+                p.data.image?.src ? (
+                  <img src={p.data.image.src} alt={p.data.title} class="w-2/5 h-auto rounded-2xl object-cover shrink-0" />
+                ) : userData.cdn.assets.projectImages[p.id] ? (
+                  <img src={userData.cdn.assets.projectImages[p.id]} alt={p.data.title} class="w-2/5 h-auto rounded-2xl object-cover shrink-0" />
+                ) : null
+              }
 
-        <!-- Project 1 -->
-        <div class="flex items-start gap-4 pb-10">
-          <img
-            src={userData.cdn.assets.projectImages.twin}
-            alt="Image of Twin PCB"
-            class="w-2/5 h-auto rounded-2xl object-cover shrink-0"
-          />
+              <div class="flex flex-col gap-2">
+                <h2 class="text-3xl font-serif">{p.data.title}</h2>
 
-          <div class="flex flex-col gap-2">
-            <h2 class="text-3xl font-serif">Twin</h2>
+                <p class="text-sm text-muted-foreground">{p.data.description}</p>
 
-            <p class="text-sm text-muted-foreground">
-              Ut nisi aute ipsum anim sit et nulla duis aute Lorem ad minim ad.
-              Sint fugiat tempor duis.
-            </p>
+                <div class="flex gap-2">
+                  <a href={`/projects/${p.id}`}>
+                    <Button variant="default" size="sm">
+                      <ArrowUpRight /> Read more
+                    </Button>
+                  </a>
 
-            <div class="flex gap-2">
-              <a href="/projects/twin">
-                <Button variant="default" size="sm">
-                  <ArrowUpRight /> Read more
-                </Button>
-              </a>
-
-              <a href={`${userData.social.github.url}/twin`} target="_blank">
-                <Button variant="outline" size="sm">
-                  <img src={userData.cdn.assets.githubIcon} alt="" class="size-4" />
-                  Repository
-                </Button>
-              </a>
+                  {p.data.github && (
+                    <a href={p.data.github} target="_blank">
+                      <Button variant="outline" size="sm">
+                        <img src={userData.cdn.assets.githubIcon} alt="" class="size-4" />
+                        Repository
+                      </Button>
+                    </a>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-
-        <!-- Project 2 -->
-        <div class="flex flex-row-reverse items-start gap-4 pb-10">
-          <img
-            src={userData.cdn.assets.projectImages.kaze}
-            alt="Image of Kaze PCB"
-            class="w-2/5 h-auto rounded-2xl object-cover shrink-0"
-          />
-
-          <div class="flex flex-col gap-2">
-            <h2 class="text-3xl font-serif">Kaze</h2>
-
-            <p class="text-sm text-muted-foreground">
-              Ut nisi aute ipsum anim sit et nulla duis aute Lorem ad minim ad.
-              Sint fugiat tempor duis.
-            </p>
-
-            <div class="flex gap-2">
-              <a href="/projects/kaze">
-                <Button variant="default" size="sm">
-                  <ArrowUpRight /> Read more
-                </Button>
-              </a>
-
-              <a href={`${userData.social.github.url}/kaze`} target="_blank">
-                <Button variant="outline" size="sm">
-                  <img src={userData.cdn.assets.githubIcon} alt="" class="size-4" />
-                  Repository
-                </Button>
-              </a>
-            </div>
-          </div>
-        </div>
-
+          ))
+        }
       </div>
 
       <a href="/projects">

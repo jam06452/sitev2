@@ -2,7 +2,7 @@
 title: "URL Shortener"
 tags: ["software", "elixir"]
 description: "A blazingly fast way to shorten URLs"
-image: ""
+image: "https://cdn.jam06452.uk/url.png"
 links:
   - label: "Demo"
     icon: "bp"

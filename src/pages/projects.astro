@@ -39,11 +39,20 @@ const rendered = await Promise.all(
         >
           <div class="flex items-start gap-6">
             {data.image && (
-              <Image
-                src={data.image}
-                alt={data.title}
-                class="w-2/5 rounded-xl object-cover shrink-0 aspect-video"
-              />
+              typeof data.image === "string" && data.image.startsWith("http") ? (
+                <img
+                  src={data.image}
+                  alt={data.title}
+                  class="w-2/5 rounded-xl object-cover shrink-0 aspect-video"
+                />
+              ) : (
+                <Image
+                  src={data.image}
+                  alt={data.title}
+                  class="w-2/5 rounded-xl object-cover shrink-0 aspect-video"
+                  inferSize={true}
+                />
+              )
             )}
             <div class="flex flex-col gap-3 flex-1">
               <h2 class="text-4xl font-serif leading-tight">{data.title}</h2>

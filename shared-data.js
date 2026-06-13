@@ -24,15 +24,14 @@ export const userData = {
 
   // CDN Configuration
   cdn: {
-    baseUrl: "https://cdn.vejas.zip",
+    baseUrl: "https://cdn.jam06452.uk",
     assets: {
       heroDark: "https://cdn.vejas.zip/assets/hero-dark.svg",
       heroLight: "https://cdn.vejas.zip/assets/hero-light.svg",
       githubIcon: "https://cdn.vejas.zip/assets/icons/Github.svg",
       blueprintIcon: "https://cdn.vejas.zip/assets/icons/bp.svg",
       projectImages: {
-        twin: "https://cdn.vejas.zip/assets/projectimages/Twin3D.png",
-        kaze: "https://cdn.vejas.zip/assets/projectimages/KazePCB.png",
+        twin: "https://cdn.vejas.zip/assets/projectimages/Twin3D.png"
       },
     },
   },
