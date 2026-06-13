@@ -1,15 +1,15 @@
 ---
-title: "Twin"
-tags: ["hardware", "PCB"]
-description: "Blah blah blah... etc"
-image: "../../assets/projectimages/Twin3D.png"
+title: "URL Shortener"
+tags: ["software", "elixir"]
+description: "A blazingly fast way to shorten URLs"
+image: ""
 links:
-  - label: "Read Journal"
+  - label: "Demo"
     icon: "bp"
-    url: "https://google.com"
+    url: "https://url.jam06452.uk"
     variant: "blueprint"
 
-github: "https://github.com/las-vejas/twin"
+github: "https://github.com/jam06452/URL_Shortener"
 date: "01-07-2026"
 
 featured: true

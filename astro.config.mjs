@@ -6,7 +6,10 @@ import react from "@astrojs/react"
 export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
+    ssr: {
+      noExternal: ["lucide-react"],
+    },
   },
   integrations: [react()],
-  output: 'static',
+  output: "static",
 })

@@ -1,5 +1,5 @@
 ---
-const GitIcon = "https://cdn.vejas.zip/assets/icons/Github.svg"
+import { userData } from "@/lib/user-data"
 import { Sun } from "lucide-react"
 import { Moon } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button"
   class="flex items-center justify-between w-full px-6 py-4 border-b border-border bg-background text-foreground font-serif text-2xl"
 >
   <div class="flex items-center gap-4 flex-1 justify-start text-sm font-medium">
-    <a href="https://github.com/las-vejas" class="hover:text-muted-foreground"
+    <a href={userData.social.github.url} class="hover:text-muted-foreground">
       ><svg
         width="16"
         height="16"
@@ -44,7 +44,7 @@ import { Button } from "@/components/ui/button"
     >
   </div>
   <div class="flex flex-1 justify-center">
-    <a href="/" class="text-5xl font-serif">Vejas</a>
+    <a href="/" class="text-5xl font-serif">{userData.name}</a>
   </div>
   <div class="flex flex-1 justify-end">
     <Button id="themeToggle" variant={"outline"} size={"icon-lg"}>

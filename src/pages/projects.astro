@@ -2,11 +2,10 @@
 import Layout from "@/layouts/main.astro"
 import { Button } from "@/components/ui/button"
 import { Image } from "astro:assets"
-import { ArrowUpRight } from "lucide-react"
-const GitHub = "https://cdn.vejas.zip/assets/icons/Github.svg"
+import { ArrowUpRight, Code2, Layers } from "lucide-react"
+import { userData } from "@/lib/user-data"
 import { getCollection, render } from "astro:content"
 import { Badge } from "@/components/ui/badge"
-const Blueprint = "https://cdn.vejas.zip/assets/icons/bp.svg"
 
 
 const projects = await getCollection("projects")
@@ -71,7 +70,7 @@ const rendered = await Promise.all(
                     onclick="event.stopPropagation()"
                   >
                     <Button variant="outline" size="sm">
-                      <GitHub /> Repository
+                      <Code2 /> Repository
                     </Button>
                   </a>
                 )}
@@ -88,7 +87,7 @@ const rendered = await Promise.all(
             {data.github && (
               <a href={data.github} target="_blank">
                 <Button variant="outline" size="sm">
-                  <GitHub /> Repository
+                  <Code2 /> Repository
                 </Button>
               </a>
             )}
@@ -96,11 +95,11 @@ const rendered = await Promise.all(
   (link: { label: string; url: string; icon?: string; color?: string; variant?: "default" | "outline" | "secondary" | "ghost" | "destructive" | "link" | "blueprint" }) => (
     <a href={link.url} target="_blank">
       <Button variant={link.variant ?? "outline"} size="sm">
-        {link.icon === "globe" && <GitHub />}
+        {link.icon === "globe" && <ArrowUpRight />}
         {link.icon === "link" && <ArrowUpRight />}
-        {link.icon === "youtube" && <GitHub />}
-        {link.icon === "download" && <GitHub />}
-        {link.icon === "bp" && <Blueprint />}
+        {link.icon === "youtube" && <ArrowUpRight />}
+        {link.icon === "download" && <ArrowUpRight />}
+        {link.icon === "bp" && <Layers />}
         {link.label}
       </Button>
     </a>

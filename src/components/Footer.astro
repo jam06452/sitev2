@@ -1,6 +1,10 @@
+---
+import { userData } from "@/lib/user-data"
+---
+
 <footer class="flex flex-col items-center justify-center w-full py-8 gap-8 bg-background text-foreground text-center">
     <div class="text-7xl md:text-8xl font-serif tracking-wide select-none">
-        Vejas S
+        {userData.fullName}
     </div>
 
     <div class="flex flex-wrap w-full items-center justify-around text-4xl md:text-4xl font-serif font-light lowercase hover:text-muted-foreground">
@@ -8,7 +12,7 @@
         <a href="/guestbook" class="hover:text-foreground transition-colors">guestbook</a>
         <a href="/projects" class="hover:text-foreground transition-colors">projects</a>
         <a href="/blog" class="hover:text-foreground transition-colors">blog</a>
-        <a href="https://github.com/las-vejas" target="_blank" class="hover:text-foreground transition-colors">github</a>
+        <a href={userData.social.github.url} target="_blank" class="hover:text-foreground transition-colors">github</a>
         <a href="/contact" class="hover:text-foreground transition-colors">contact</a>
     </div>
 

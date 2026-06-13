@@ -1,4 +1,5 @@
 import { Resend } from 'resend';
+import { userData } from '../../shared-data.js';
 
 interface Env {
   RESEND_API_KEY: string;
@@ -14,8 +15,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
     // 3. Dispatch the email payload
     const { data, error } = await resend.emails.send({
-      from: `${name} <email@vejas.zip>`,
-      to: 'vejas@vejas.zip', // Where you want to receive the notifications
+      from: `${name} <email@${userData.domain}>`,
+      to: userData.email, // Where you want to receive the notifications
       replyTo: `${name} <${email}>`,
       subject: `New message from ${name}`,
       html: `

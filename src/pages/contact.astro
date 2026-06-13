@@ -2,7 +2,7 @@
 import Layout from "@/layouts/main.astro"
 import { Button } from "@/components/ui/button"
 import { Image } from "astro:assets"
-const GitHub = "src/assets/icons/Github.svg"
+import { userData } from "@/lib/user-data"
 import { Mail, Send } from "lucide-react"
 ---
 
@@ -45,7 +45,7 @@ import { Mail, Send } from "lucide-react"
                 type="email"
                 id="email"
                 name="email"
-                placeholder="vejas@vejas.zip"
+                placeholder={userData.email}
                 required
                 class="flex h-10 w-full rounded-md border border-border/60 bg-muted/30 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               />
@@ -87,7 +87,7 @@ import { Mail, Send } from "lucide-react"
 
           <div class="flex flex-col gap-3 text-md justify-center items-center pt-4">
             <a
-              href="https://github.com/las-vejas"
+              href={userData.social.github.url}
               target="_blank"
               class="inline-flex items-center gap-2.5 hover:underline text-foreground"
             >
@@ -116,7 +116,7 @@ import { Mail, Send } from "lucide-react"
             </a>
 
             <a
-              href="mailto:vejas@vejas.zip"
+              href={`mailto:${userData.email}`}
               class="inline-flex items-center gap-2.5 hover:underline text-foreground"
             >
               <Mail className="w-4 h-4" />
@@ -124,7 +124,7 @@ import { Mail, Send } from "lucide-react"
             </a>
 
             <a
-              href="https://discord.com"
+              href={userData.social.discord}
               target="_blank"
               class="inline-flex items-center gap-2.5 hover:underline text-foreground"
             >
@@ -141,7 +141,7 @@ import { Mail, Send } from "lucide-react"
             </a>
 
             <a
-              href="https://hackclub.enterprise.slack.com/team/U0930DMR4BA"
+              href={userData.social.slack}
               target="_blank"
               class="inline-flex items-center gap-2.5 hover:underline text-foreground"
             >
