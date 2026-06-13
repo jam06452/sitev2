@@ -8,7 +8,10 @@ const projects = await getCollection("projects")
 const rendered = await Promise.all(
   projects.map(async (p: any) => ({ ...p, content: await render(p) }))
 )
-const featured = rendered.filter((p: any) => p.data.featured).slice(0, 2)
+const featured = rendered
+  .filter((p: any) => p.data.featured)
+  .sort((a: any, b: any) => Number(Boolean(b.data.image)) - Number(Boolean(a.data.image)))
+  .slice(0, 2)
 ---
 
 
