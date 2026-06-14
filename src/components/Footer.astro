@@ -1,5 +1,14 @@
 ---
 import { userData } from "@/lib/user-data"
+import { getLatestCommit } from "@/lib/github"
+
+const commitData = await (async () => {
+    try {
+        return await getLatestCommit(userData.social.github.username, 'portfolio')
+    } catch (e) {
+        return null
+    }
+})()
 ---
 
 <footer class="flex flex-col items-center justify-center w-full py-8 gap-8 bg-background text-foreground text-center">
@@ -17,7 +26,17 @@ import { userData } from "@/lib/user-data"
     </div>
 
     <div class="text-md font-serif tracking-wider">
-        commit <a href="#" class="text-blue-500 hover:text-blue-400 hover:underline">fj39ghe</a> on June 4, 2026
+        commit
+        {commitData ? (
+            <>
+                <a href={commitData.html_url} target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-400 hover:underline">{commitData.sha}</a>
+                {' '}on {new Date(commitData.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </>
+        ) : (
+            <>
+                <a href="https://github.com/jam06452/portfolio/commit/fj39ghe" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-400 hover:underline">fj39ghe</a> on June 4, 2026
+            </>
+        )}
     </div>
     <!-- integrate the github current commit pulling later -->
 </footer>
