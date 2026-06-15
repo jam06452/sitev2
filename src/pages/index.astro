@@ -22,21 +22,6 @@ const featured = rendered
   <div
     class="flex w-full flex-col items-center justify-start gap-6 px-4 pt-20 pb-24 text-center sm:px-6 sm:pt-24 sm:pb-32 lg:pt-28 lg:pb-40"
   >
-    <img
-      src={userData.cdn.assets.heroDark}
-      alt="Hero illustration"
-      width="768"
-      height="400"
-      class="hidden w-full max-w-3xl dark:block"
-    />
-    <img
-      src={userData.cdn.assets.heroLight}
-      alt="Hero illustration"
-      width="768"
-      height="400"
-      fetchpriority="high"
-      class="w-full max-w-3xl dark:hidden"
-    />
     <h2 class="balance max-w-xl font-serif text-2xl sm:text-3xl">
       {userData.bio.trim()}
     </h2>
@@ -84,14 +69,24 @@ const featured = rendered
                   {p.data.description}
                 </p>
                 <div class="flex gap-2 pt-1">
-                  <Button asChild variant="default" size="sm" className="h-11 px-4">
+                  <Button
+                    asChild
+                    variant="default"
+                    size="sm"
+                    className="h-11 px-4"
+                  >
                     <a href={`/projects/${p.id}`}>
                       <ArrowUpRight className="size-4" /> Read more about{" "}
                       {p.data.title}
                     </a>
                   </Button>
                   {p.data.github && (
-                    <Button asChild variant="outline" size="sm" className="h-11 px-4">
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="sm"
+                      className="h-11 px-4"
+                    >
                       <a
                         href={p.data.github}
                         target="_blank"

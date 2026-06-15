@@ -10,7 +10,7 @@ export const userData = {
   email: "jam@jam06452.uk",
   domain: "jam06452.uk",
   location: "United Kingdom",
-  bio: "Teen dev based in UK building elixir applications",
+  bio: "Teen dev based in the UK building web based & elixir applications",
 
   // Social Media & Links
   social: {
