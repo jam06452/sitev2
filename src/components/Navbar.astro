@@ -34,7 +34,14 @@ import { Button } from "@/components/ui/button"
       </svg>
     </a>
 
-    <Button id="themeToggle" variant={"outline"} size={"icon"}>
+    <Button
+      id="themeToggle"
+      type="button"
+      variant={"outline"}
+      size={"icon"}
+      aria-label="Toggle color theme"
+      className="size-11"
+    >
       <Sun className="hidden dark:block" />
       <Moon className="block dark:hidden" />
     </Button>

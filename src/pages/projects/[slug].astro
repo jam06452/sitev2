@@ -23,7 +23,7 @@ if (!project) {
   throw new Error(`Project not found: ${slug}`)
 }
 
-const projectImage = project.data.image as string | { src: string } | undefined
+const projectImage = project.data.image as any
 const localProjectImage = typeof projectImage === "string" ? undefined : projectImage
 
 const { Content } = await render(project)
@@ -37,7 +37,7 @@ const { Content } = await render(project)
         <img src={projectImage} alt={project.data.title} class="w-full rounded-xl object-cover mb-6 aspect-video" />
       ) : (
         localProjectImage && (
-          <Image src={localProjectImage} alt={project.data.title} class="w-full rounded-xl object-cover mb-6 aspect-video" inferSize={true} />
+          <Image src={localProjectImage as any} alt={project.data.title} class="w-full rounded-xl object-cover mb-6 aspect-video" inferSize={true} />
         )
       )
     )}
@@ -50,13 +50,15 @@ const { Content } = await render(project)
 
     <div class="mt-6 flex gap-2">
       {project.data.github && (
-        <a href={project.data.github} target="_blank">
-          <Button variant="outline"><ArrowUpRight /> Repository</Button>
-        </a>
+        <Button asChild variant="outline" className="h-11 px-4">
+          <a href={project.data.github} target="_blank" rel="noopener noreferrer">
+            <ArrowUpRight /> Repository
+          </a>
+        </Button>
       )}
-      <a href="/projects">
-        <Button variant="ghost">Back</Button>
-      </a>
+      <Button asChild variant="ghost" className="h-11 px-4">
+        <a href="/projects">Back</a>
+      </Button>
     </div>
   </div>
 </Layout>

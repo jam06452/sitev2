@@ -84,19 +84,19 @@ const featured = rendered
                   {p.data.description}
                 </p>
                 <div class="flex gap-2 pt-1">
-                  <a href={`/projects/${p.id}`}>
-                    <Button variant="default" size="sm">
-                      <ArrowUpRight class="size-4" /> Read more about{" "}
+                  <Button asChild variant="default" size="sm" className="h-11 px-4">
+                    <a href={`/projects/${p.id}`}>
+                      <ArrowUpRight className="size-4" /> Read more about{" "}
                       {p.data.title}
-                    </Button>
-                  </a>
+                    </a>
+                  </Button>
                   {p.data.github && (
-                    <a
-                      href={p.data.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Button variant="outline" size="sm">
+                    <Button asChild variant="outline" size="sm" className="h-11 px-4">
+                      <a
+                        href={p.data.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <img
                           src={userData.cdn.assets.githubIcon}
                           alt=""
@@ -105,8 +105,8 @@ const featured = rendered
                           class="size-4"
                         />
                         Repository
-                      </Button>
-                    </a>
+                      </a>
+                    </Button>
                   )}
                 </div>
               </div>
@@ -116,7 +116,7 @@ const featured = rendered
       </div>
       <a href="/projects">
         <Button variant="outline" size="lg">
-          <ArrowUpRight class="size-4" /> Projects Page
+          <ArrowUpRight className="size-4" /> Projects Page
         </Button>
       </a>
     </div>

@@ -65,23 +65,25 @@ const rendered = await Promise.all(
                 {data.description}
               </p>
               <div class="flex gap-2 mt-2">
-                <Button
-                  variant="default"
-                  size="sm"
-                  className="pointer-events-none"
-                >
+                <span class="inline-flex min-h-11 items-center justify-center gap-1 rounded-[min(var(--radius-md),12px)] border border-transparent bg-primary px-3.5 text-sm font-medium whitespace-nowrap text-primary-foreground">
                   <ArrowUpRight /> Read more
-                </Button>
+                </span>
                 {data.github && (
-                  <a
-                    href={data.github}
-                    target="_blank"
-                    onclick="event.stopPropagation()"
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="sm"
+                    className="h-11 px-4"
                   >
-                    <Button variant="outline" size="sm">
+                    <a
+                      href={data.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onclick="event.stopPropagation()"
+                    >
                       <Code2 /> Repository
-                    </Button>
-                  </a>
+                    </a>
+                  </Button>
                 )}
               </div>
             </div>
@@ -94,24 +96,24 @@ const rendered = await Promise.all(
           </div>
           <div class="hidden" data-modal-actions>
             {data.github && (
-              <a href={data.github} target="_blank">
-                <Button variant="outline" size="sm">
+              <Button asChild variant="outline" size="sm" className="h-11 px-4">
+                <a href={data.github} target="_blank" rel="noopener noreferrer">
                   <Code2 /> Repository
-                </Button>
-              </a>
+                </a>
+              </Button>
             )}
             {data.links?.map(
   (link: { label: string; url: string; icon?: string; color?: string; variant?: "default" | "outline" | "secondary" | "ghost" | "destructive" | "link" | "blueprint" }) => (
-    <a href={link.url} target="_blank">
-      <Button variant={link.variant ?? "outline"} size="sm">
+    <Button asChild variant={link.variant ?? "outline"} size="sm" className="h-11 px-4">
+      <a href={link.url} target="_blank" rel="noopener noreferrer">
         {link.icon === "globe" && <ArrowUpRight />}
         {link.icon === "link" && <ArrowUpRight />}
         {link.icon === "youtube" && <ArrowUpRight />}
         {link.icon === "download" && <ArrowUpRight />}
         {link.icon === "bp" && <Layers />}
         {link.label}
-      </Button>
-    </a>
+      </a>
+    </Button>
   )
 )}
           </div>
