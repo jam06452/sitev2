@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jam06452.uk/sitemap-index.xml
