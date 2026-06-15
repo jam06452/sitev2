@@ -10,21 +10,23 @@ const rendered = await Promise.all(
 )
 const featured = rendered
   .filter((p: any) => p.data.featured)
-  .sort((a: any, b: any) => Number(Boolean(b.data.image)) - Number(Boolean(a.data.image)))
+  .sort(
+    (a: any, b: any) =>
+      Number(Boolean(b.data.image)) - Number(Boolean(a.data.image))
+  )
   .slice(0, 2)
 ---
-
 
 <Layout>
   <!-- HERO -->
   <div
-    class="flex flex-col w-full items-center justify-start gap-6 px-4 pt-20 pb-24 text-center sm:px-6 sm:pt-24 sm:pb-32 lg:pt-28 lg:pb-40"
+    class="flex w-full flex-col items-center justify-start gap-6 px-4 pt-20 pb-24 text-center sm:px-6 sm:pt-24 sm:pb-32 lg:pt-28 lg:pb-40"
   >
     <img
       src={userData.cdn.assets.heroDark}
       alt="Hero illustration"
       aria-label={userData.fullName}
-      class="w-full max-w-3xl hidden dark:block"
+      class="hidden w-full max-w-3xl dark:block"
     />
     <img
       src={userData.cdn.assets.heroLight}
@@ -33,36 +35,56 @@ const featured = rendered
       class="w-full max-w-3xl dark:hidden"
     />
 
-    <h2 class="max-w-xl text-2xl font-serif balance sm:text-3xl">
-      is a {userData.bio.split("based")[1].trim()}
+    <h2 class="balance max-w-xl font-serif text-2xl sm:text-3xl">
+      {userData.bio.trim()}
     </h2>
   </div>
 
   <!-- MAIN GRID -->
-  <div class="grid w-full grid-cols-1 items-start border-t border-border/40 mb-20 lg:grid-cols-2 lg:mb-28">
-
+  <div
+    class="mb-20 grid w-full grid-cols-1 items-start border-t border-border/40 lg:mb-28 lg:grid-cols-2"
+  >
     <!-- PROJECTS -->
-    <div class="flex flex-col items-center justify-center p-6 border-border/40 sm:p-8 lg:border-r lg:p-10">
-      <h1 class="pb-10 text-4xl font-serif sm:text-5xl lg:text-6xl">Projects</h1>
+    <div
+      class="flex flex-col items-center justify-center border-border/40 p-6 sm:p-8 lg:border-r lg:p-10"
+    >
+      <h1 class="pb-10 font-serif text-4xl sm:text-5xl lg:text-6xl">
+        Projects
+      </h1>
 
       <div class="pb-6">
         {
           featured.map((p: any, i: number) => (
-            <div class={i % 2 === 1 ? "flex flex-row-reverse items-start gap-4 pb-10" : "flex items-start gap-4 pb-10"}>
-              {
-                p.data.image ? (
-                  typeof p.data.image === "string" && p.data.image.startsWith("http") ? (
-                    <img src={p.data.image} alt={p.data.title} class="w-2/5 h-auto rounded-2xl object-cover shrink-0" />
-                  ) : (
-                    <img src={p.data.image.src} alt={p.data.title} class="w-2/5 h-auto rounded-2xl object-cover shrink-0" />
-                  )
-                ) : null
+            <div
+              class={
+                i % 2 === 1
+                  ? "flex flex-row-reverse items-start gap-4 pb-10"
+                  : "flex items-start gap-4 pb-10"
               }
+            >
+              {p.data.image ? (
+                typeof p.data.image === "string" &&
+                p.data.image.startsWith("http") ? (
+                  <img
+                    src={p.data.image}
+                    alt={p.data.title}
+                    class="h-auto w-2/5 shrink-0 rounded-2xl object-cover"
+                  />
+                ) : (
+                  <img
+                    src={p.data.image.src}
+                    alt={p.data.title}
+                    class="h-auto w-2/5 shrink-0 rounded-2xl object-cover"
+                  />
+                )
+              ) : null}
 
               <div class="flex flex-col gap-2">
-                <h2 class="text-3xl font-serif">{p.data.title}</h2>
+                <h2 class="font-serif text-3xl">{p.data.title}</h2>
 
-                <p class="text-sm text-muted-foreground">{p.data.description}</p>
+                <p class="text-sm text-muted-foreground">
+                  {p.data.description}
+                </p>
 
                 <div class="flex gap-2">
                   <a href={`/projects/${p.id}`}>
@@ -74,7 +96,11 @@ const featured = rendered
                   {p.data.github && (
                     <a href={p.data.github} target="_blank">
                       <Button variant="outline" size="sm">
-                        <img src={userData.cdn.assets.githubIcon} alt="" class="size-4" />
+                        <img
+                          src={userData.cdn.assets.githubIcon}
+                          alt=""
+                          class="size-4"
+                        />
                         Repository
                       </Button>
                     </a>
@@ -95,13 +121,15 @@ const featured = rendered
 
     <!-- BLOG -->
     <div class="flex flex-col items-center justify-center p-6 sm:p-8 lg:p-10">
-      <h1 class="pb-10 text-4xl font-serif sm:text-5xl lg:text-6xl">Blog</h1>
-      <p class="text-xs text-muted-foreground text-center pt-2">
-        <a href="/blog" class="underline underline-offset-4 hover:text-foreground">
+      <h1 class="pb-10 font-serif text-4xl sm:text-5xl lg:text-6xl">Blog</h1>
+      <p class="pt-2 text-center text-xs text-muted-foreground">
+        <a
+          href="/blog"
+          class="underline underline-offset-4 hover:text-foreground"
+        >
           Browse the blog
         </a>
       </p>
     </div>
-
   </div>
 </Layout>
